@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hping3-cronjob
+spec:
+  schedule: "*/5 * * * *"  # Setiap 10 menit
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            runAsUser: 1000  # Non-root user
+            runAsGroup: 1000
+            fsGroup: 1000
+          containers:
+            - name: hping3
+              image: alpine
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk add --no-cache hping3 curl bash &&
+                  chmod +x /script/script.sh &&
+                  /script/script.sh
+              volumeMounts:
+                - name: script-volume
+                  mountPath: /script
+          restartPolicy: Never
+          volumes:
+            - name: script-volume
+              configMap:
+                name: hping3-script
