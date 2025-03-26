@@ -42,18 +42,18 @@ spec:
             memory: "1Gi"
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        securityContext:
+          runAsUser: 1000  # Non-root user
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
         volumeMounts:
         - mountPath: /var/lib/influxdb
           name: var-lib-influxdb
       dnsPolicy: ClusterFirst
       restartPolicy: Always
-      securityContext:
-        runAsUser: 1000  # Non-root user
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-          - ALL
-        runAsNonRoot: true
       terminationGracePeriodSeconds: 30
       volumes:
       - name: var-lib-influxdb
@@ -72,7 +72,7 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 ---
 
 apiVersion: v1
