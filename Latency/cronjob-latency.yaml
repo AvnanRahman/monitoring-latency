@@ -14,11 +14,10 @@ spec:
             fsGroup: 1000
           containers:
             - name: hping3
-              image: alpine
+              image: hiroominan/ubuntu:hping3
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  apk add --no-cache hping3 curl bash &&
                   chmod +x /script/script.sh &&
                   /script/script.sh
               volumeMounts:
