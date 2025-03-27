@@ -1,4 +1,4 @@
-kubectl run -it --rm --name=pvc-helper  --image=alpine --restart=Never --overrides='
+kubectl run -it --rm  --image=alpine --restart=Never --overrides='
 {
   "spec": {
     "containers": [{
@@ -11,7 +11,7 @@ kubectl run -it --rm --name=pvc-helper  --image=alpine --restart=Never --overrid
       }]
     }],
     "volumes": [{
-      "name": "pvc-sciprt",
+      "name": "pvc-script",
       "persistentVolumeClaim": {
         "claimName": "pvc-script"
       }
