@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pvc-helper
+  namespace: default
+spec:
+  securityContext:
+    runAsUser: 1000  # Menjalankan pod sebagai user 1000
+    runAsNonRoot: true  # Memastikan tidak berjalan sebagai root
+  containers:
+  - name: pvc-helper
+    image: alpine
+    command: ["/bin/sh", "-c", "sleep infinity"]  # Agar tetap berjalan
+    securityContext:
+      allowPrivilegeEscalation: false  # Mencegah eskalasi privilege
+      runAsUser: 1000  # Menjalankan container sebagai user 1000
+      capabilities:
+        drop:
+        - ALL  # Menghapus semua kemampuan khusus untuk keamanan
+    volumeMounts:
+    - name: pvc-script
+      mountPath: "/data"
+  volumes:
+  - name: pvc-script
+    persistentVolumeClaim:
+      claimName: pvc-script
