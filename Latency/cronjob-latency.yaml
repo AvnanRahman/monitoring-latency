@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: hping3-cronjob
 spec:
-  schedule: "*/5 * * * *"  # Setiap 10 menit
+  schedule: "*/5 * * * *"  # Setiap 5 menit
   jobTemplate:
     spec:
       template:
@@ -18,13 +18,12 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  chmod +x /script/script.sh &&
-                  /script/script.sh
+                  /data/script-hping3.sh
               volumeMounts:
                 - name: script-volume
-                  mountPath: /script
+                  mountPath: /data
           restartPolicy: Never
           volumes:
             - name: script-volume
-              configMap:
-                name: hping3-script
+              persistentVolumeClaim:
+                claimName: pvc-script
