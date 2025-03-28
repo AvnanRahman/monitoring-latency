@@ -1,0 +1,7 @@
+apiVersion: tenants.cloudeka.ai/v1alpha2
+kind: CloudekaVPC
+metadata:
+  name: latency
+  namespace: latency
+spec:
+  isolate: false
