@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: hping3-cronjob
+  name: download-cronjob
 spec:
-  schedule: "*/5 * * * *"  # Setiap 5 menit
+  schedule: "* */2 * * *"  # Setiap 2 jam
   jobTemplate:
     spec:
       template:
@@ -18,7 +18,7 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  /data/script-hping3.sh
+                  /data/script-download.sh
               volumeMounts:
                 - name: script-volume
                   mountPath: /data
