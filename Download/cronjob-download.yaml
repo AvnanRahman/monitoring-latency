@@ -13,7 +13,7 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
           containers:
-            - name: hping3
+            - name: download
               image: hiroominan/ubuntu:latency
               command: ["/bin/sh", "-c"]
               args:
