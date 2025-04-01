@@ -4,6 +4,7 @@ metadata:
   name: download-cronjob
 spec:
   schedule: "* */2 * * *"  # Setiap 2 jam
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
       template:
