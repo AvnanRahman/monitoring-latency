@@ -11,6 +11,8 @@ SERVICES=(
     "quay.io"
     "huggingface.co"
     "www.kaggle.com"
+    "drive.google.com"
+    "lintasarta-my.sharepoint.com"
 )
 
 # InfluxDB configuration
