@@ -6,6 +6,8 @@ SERVICES=(
     "storage.googleapis.com"
     "huggingface.co"
     "www.kaggle.com"
+    "drive.google.com"
+    "lintasarta-my.sharepoint.com"
 )
 
 # Token Hugging Face
@@ -86,6 +88,10 @@ for SERVICE in "${SERVICES[@]}"; do
             "Authorization: Bearer $HF_TOKEN"
     elif [[ "$SERVICE" == "www.kaggle.com" ]]; then
         test_download_speed "https://$SERVICE/api/v1/datasets/download/gpiosenka/cards-image-datasetclassification"
+    elif [[ "$SERVICE" == "drive.google.com" ]]; then
+        test_download_speed "https://drive.usercontent.google.com/download?id=1cWn2jxHucURx4Kt9jIbJ8z8o0c1629Zv&export=download&confirm=t"
+    elif [[ "$SERVICE" == "lintasarta-my.sharepoint.com" ]]; then
+        test_download_speed "https://lintasarta-my.sharepoint.com/personal/afnan_ngathour_lintasarta_co_id/_layouts/15/download.aspx?share=EUfoI_MChNZOrVNe0EM2TYoB81qQ0yWdSLPwzJV1mXQtxw"
     fi
 done
 
