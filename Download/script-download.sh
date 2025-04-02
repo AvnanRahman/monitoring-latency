@@ -24,12 +24,14 @@ log_to_influxdb_dw() {
     SPEED=$3
     SIZE=$4
     ELAPSE=$5
-    TIMESTAMP=$(date +"%Y-%m-%dT%H:%M:%SZ") # Format timestamp untuk InfluxDB
+
+    # Encode URL agar aman untuk dimasukkan sebagai field, bukan tag
+    SAFE_URL=$(echo "$URL" | sed 's/[ ,]/_/g')
 
     curl -s --request POST "$INFLUXDB_URL/api/v2/write?org=$INFLUXDB_ORG&bucket=$INFLUXDB_BUCKET&precision=s" \
         --header "Authorization: Token $INFLUXDB_TOKEN" \
         --data-binary "
-download_speed,service=$SERVICE,url=$URL speed=$SPEED,size=$SIZE,elapse=$ELAPSE $(( $(date +%s) ))"
+download_speed,service=$SERVICE speed=$SPEED,size=$SIZE,elapse=$ELAPSE,url=\"$SAFE_URL\" $(( $(date +%s) ))"
 }
 
 # Fungsi untuk tes kecepatan download dan ukuran file
