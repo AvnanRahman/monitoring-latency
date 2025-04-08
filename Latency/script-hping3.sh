@@ -28,9 +28,9 @@ log_to_influxdb() {
     TIMESTAMP=$(date +"%s%N") # Timestamp in nanoseconds
 
     if [[ "$LATENCY" == "0" ]]; then
-        STATUS="blocked"
+        STATUS="false"
     else
-        STATUS="reachable"
+        STATUS="true"
     fi
 
     curl -s -X POST "$INFLUXDB_URL/api/v2/write?org=$INFLUXDB_ORG&bucket=$INFLUXDB_BUCKET&precision=ns" \
