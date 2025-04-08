@@ -28,14 +28,14 @@ log_to_influxdb() {
     TIMESTAMP=$(date +"%s%N") # Timestamp in nanoseconds
 
     if [[ "$LATENCY" == "0" ]]; then
-        STATUS="false"
+        STATUS="false" # Blocked
     else
-        STATUS="true"
+        STATUS="true" # Reachable
     fi
 
     curl -s -X POST "$INFLUXDB_URL/api/v2/write?org=$INFLUXDB_ORG&bucket=$INFLUXDB_BUCKET&precision=ns" \
         --header "Authorization: Token $INFLUXDB_TOKEN" \
-        --data-binary "latency,service=$SERVICE,status=$STATUS latency=$LATENCY $TIMESTAMP"
+        --data-binary "latency,service=$SERVICE status=$STATUS,latency=$LATENCY $TIMESTAMP"
 }
 
 # Fungsi untuk tes latency menggunakan hping3
