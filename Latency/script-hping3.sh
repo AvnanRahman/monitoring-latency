@@ -42,7 +42,7 @@ log_to_influxdb() {
 test_latency_with_hping3() {
     SERVICE=$1
     echo "Testing TCP latency to $SERVICE with hping3..."
-    HPING_RESULT=$(sudo hping3 -S -p 443 -c 3 $SERVICE 2>/dev/null | grep "rtt=" | awk -F'rtt=' '{print $2}' | awk '{print $1}')
+    HPING_RESULT=$(hping3 -S -p 443 -c 3 $SERVICE 2>/dev/null | grep "rtt=" | awk -F'rtt=' '{print $2}' | awk '{print $1}')
     
     if [[ -z "$HPING_RESULT" ]]; then
         echo "Latency to $SERVICE: Blocked (hping3)"
