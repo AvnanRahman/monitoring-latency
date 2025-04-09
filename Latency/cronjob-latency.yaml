@@ -22,13 +22,13 @@ spec:
               volumeMounts:
                 - name: script-volume
                   mountPath: /data
-              securityContext:
-                allowPrivilegeEscalation: false
-                runAsUser: 1000
-                capabilities:
-                 drop:
-                 - ALL
-                runAsNonRoot: true
+#              securityContext:
+#                allowPrivilegeEscalation: false
+#                runAsUser: 1000
+#                capabilities:
+#                 drop:
+#                 - ALL
+#                runAsNonRoot: true
           restartPolicy: Never
           volumes:
             - name: script-volume
