@@ -80,7 +80,7 @@ test_download_speed() {
 for SERVICE in "${SERVICES[@]}"; do
     # Tes download speed hanya untuk domain yang mendukung file download
     if [[ "$SERVICE" == "archive.ubuntu.com" ]]; then
-        test_download_speed "https://$SERVICE/ubuntu/pool/main/m/mysql-8.4/mysql-8.4_8.4.3.orig.tar.gz"
+        test_download_speed "https://$SERVICE/ubuntu/pool/main/m/mysql-8.4/mysql-8.4_8.4.4.orig.tar.gz"
     elif [[ "$SERVICE" == "storage.googleapis.com" ]]; then
         test_download_speed "https://$SERVICE/gcp-public-data-landsat/index.csv.gz"
     elif [[ "$SERVICE" == "huggingface.co" ]]; then
