@@ -42,9 +42,11 @@ test_pull_image_speed() {
     IMAGE=$2
     SIZE=$3
     echo "Testing image pull speed for $IMAGE from $SERVICE..."
+    mkdir /data2/$SERVICE
     START=$(date +%s)
-    docker pull $IMAGE >/dev/null 2>&1
+    skopeo copy docker://$IMAGE dir:/data2/$SERVICE 2>&1
     END=$(date +%s)
+    rm -rf /data2/$SERVICE
     DURATION=$((END - START))
     if [[ $DURATION -eq 0 ]]; then
         SPEED=0
