@@ -1,0 +1,2182 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 289,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "panels": [],
+      "title": "Last Test",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 600,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-green",
+                "value": 50
+              },
+              {
+                "color": "semi-dark-yellow",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 200
+              },
+              {
+                "color": "dark-red",
+                "value": 500
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"archive.ubuntu.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Archive Ubuntu"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"docker.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"gcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "gcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"ghcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "ghcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"huggingface.co\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "huggingface.co"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"nvcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "nvcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"storage.googleapis.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Bucket"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"quay.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "quay.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"www.kaggle.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "kaggle.com"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"drive.google.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Drive"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"lintasarta-my.sharepoint.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "OneDrive LA"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "text": {}
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"archive.ubuntu.com\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"docker.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"gcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"ghcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"huggingface.co\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"nvcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"storage.googleapis.com\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"quay.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "H",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"www.kaggle.com\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "I",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"drive.google.com\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "J",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => r[\"status\"] == \"true\")\n  |> filter(fn: (r) => r[\"service\"] == \"lintasarta-my.sharepoint.com\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "K",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Last Latency",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status archive.ubuntu.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status docker.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status drive.google.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status gcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status ghcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status huggingface.co"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status lintasarta-my.sharepoint.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status nvcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status quay.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status storage.googleapis.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status www.kaggle.com"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 7
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\r\n  |> filter(fn: (r) => r[\"status\"] == \"false\")\r\n  |> group() // Grupkan semua data tanpa membagi per window\r\n  |> count(column: \"status\") // Hitung jumlah status blocked\r\n  |> yield(name: \"total_blocked\")",
+          "refId": "A"
+        }
+      ],
+      "title": "Uncreachable Count",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status archive.ubuntu.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status docker.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status drive.google.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status gcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status ghcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status huggingface.co"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status lintasarta-my.sharepoint.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status nvcr.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status quay.io"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status storage.googleapis.com"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status www.kaggle.com"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 19,
+        "x": 5,
+        "y": 7
+      },
+      "id": 19,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "fullHighlight": false,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\r\n  |> filter(fn: (r) => r[\"status\"] == \"false\") // status sebagai tag\r\n  |> group(columns: [\"service\"]) // Group berdasarkan service\r\n  |> aggregateWindow(every: v.windowPeriod, fn: count, createEmpty: false) // Hitung jumlah blocked per service\r\n  |> yield(name: \"count\")\r\n",
+          "refId": "A"
+        }
+      ],
+      "title": "Uncreachable Detail",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "orange",
+                "value": null
+              },
+              {
+                "color": "super-light-green",
+                "value": 10
+              },
+              {
+                "color": "light-green",
+                "value": 20
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 50
+              },
+              {
+                "color": "dark-green",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "MBs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed archive.ubuntu.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Archive Ubuntu"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed huggingface.co"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "huggingface.co"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed storage.googleapis.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Bucket"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed www.kaggle.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "kaggle.com"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed drive.google.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Drive"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 13,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "text": {}
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"archive.ubuntu.com\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"huggingface.co\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"storage.googleapis.com\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"www.kaggle.com\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"drive.google.com\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Last Download Speed",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 200,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-yellow"
+              },
+              {
+                "color": "super-light-green",
+                "value": 10
+              },
+              {
+                "color": "light-green",
+                "value": 20
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 50
+              },
+              {
+                "color": "dark-green",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "MBs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed {image=\"docker.io/library/node:latest\", service=\"docker.io\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed {image=\"gcr.io/google-containers/cos-nvidia-driver-install:v0.4\", service=\"gcr.io\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed {image=\"ghcr.io/jumppad-labs/dind:v1.1.3\", service=\"ghcr.io\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "GitHub"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed {image=\"nvcr.io/nvidia/cntk:18.08-py3\", service=\"nvcr.io\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Nvidia"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed {image=\"quay.io/fedora/mariadb-105\", service=\"quay.io\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Red Hat Quay"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 17,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "text": {}
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"docker.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"gcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"ghcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"nvcr.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
+        },
+        {
+          "alias": "",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> filter(fn: (r) => r[\"service\"] == \"quay.io\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Last Docker Pull Speed",
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 5,
+      "panels": [],
+      "title": "Previous Test",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"archive.ubuntu.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Archive Ubuntu"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"docker.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"ghcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "GHCR.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"gcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "GCR.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"huggingface.co\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "huggingface"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"nvcr.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "NVCR.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"quay.io\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "QUAY.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"storage.googleapis.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Storage Google"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"www.kaggle.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "kaggle.com"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"drive.google.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Drive"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "latency {service=\"lintasarta-my.sharepoint.com\", status=\"true\"}"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "OneDrive LA"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"latency\")\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Ping Latency (ms)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "MBs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed archive.ubuntu.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Archive Ubuntu"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed huggingface.co"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "HuggingFace"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed storage.googleapis.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Storage"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed www.kaggle.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Kaggle"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed drive.google.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Drive"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed lintasarta-my.sharepoint.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "OneDrive LA"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Download Speed (MB/s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 0,
+        "y": 41
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "hide": false,
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"_field\"] == \"elapse\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Download Duration (Second)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "yellow",
+                "value": 1000
+              },
+              {
+                "color": "orange",
+                "value": 2500
+              },
+              {
+                "color": "red",
+                "value": 5000
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size archive.ubuntu.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Archive Ubuntu"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size huggingface.co"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "HuggingFace"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size storage.googleapis.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Storage"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size www.kaggle.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Kaggle"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size drive.google.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Google Drive"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size lintasarta-my.sharepoint.com"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "OneDrive LA"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 41
+      },
+      "id": 12,
+      "options": {
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"download_speed\")\n  |> filter(fn: (r) => r[\"_field\"] == \"size\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Download Size (MB)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "MBs"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed docker.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed gcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "gcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed ghcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "ghcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed nvcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "nvcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "speed quay.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Quay.io"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 49
+      },
+      "id": 14,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"speed\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Docker Pull Speed (MB/s)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration docker.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration gcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "gcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration ghcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "ghcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration nvcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "nvcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "duration quay.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Quay.io"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 0,
+        "y": 57
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"duration\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Docker Pull Duration (Second)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "fe95gwgs7a58ge"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "yellow",
+                "value": 1000
+              },
+              {
+                "color": "orange",
+                "value": 2000
+              },
+              {
+                "color": "red",
+                "value": 5000
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size docker.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Docker.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size gcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "gcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size ghcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "ghcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size nvcr.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "nvcr.io"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "size quay.io"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "quay.io"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 57
+      },
+      "id": 16,
+      "options": {
+        "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "11.1.7+security-01",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "fe95gwgs7a58ge"
+          },
+          "query": "from(bucket: \"performance_metrics\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"docker_pull\")\n  |> filter(fn: (r) => r[\"_field\"] == \"size\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series"
+        }
+      ],
+      "title": "Download Size (MB)",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Latency Dashboard",
+  "uid": "fe7v7t96zn474d",
+  "version": 20,
+  "weekStart": ""
+}
