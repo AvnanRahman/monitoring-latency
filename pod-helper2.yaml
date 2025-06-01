@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: script-helper
+  name: script-helper2
 #  namespace: latency
 spec:
   securityContext:
@@ -12,17 +12,17 @@ spec:
     image: hiroominan/ubuntu:latency
     command: ["/bin/sh", "-c", "sleep infinity"]  # Agar tetap berjalan
     securityContext:
-      allowPrivilegeEscalation: true  # Mencegah eskalasi privilege
+      allowPrivilegeEscalation: false  # Mencegah eskalasi privilege
       runAsUser: 1000  # Menjalankan container sebagai user 1000
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/hostname
-            operator: In
-            values:
-            - jah1af09srhgxs017
+#  affinity:
+#    nodeAffinity:
+#      requiredDuringSchedulingIgnoredDuringExecution:
+#        nodeSelectorTerms:
+#        - matchExpressions:
+#          - key: kubernetes.io/hostname
+#            operator: In
+#            values:
+#            - jah1af11srhgxs022
 #      capabilities:
 #        add: ["NET_RAW"]
 #        add:

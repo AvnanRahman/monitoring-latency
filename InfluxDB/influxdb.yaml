@@ -50,7 +50,7 @@ spec:
             - ALL
           runAsNonRoot: true
         volumeMounts:
-        - mountPath: /var/lib/influxdb
+        - mountPath: /var/lib/influxdb2
           name: var-lib-influxdb
       dnsPolicy: ClusterFirst
       restartPolicy: Always

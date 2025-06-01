@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-test
+spec:
+  securityContext:
+    runAsUser: 1000  # Menjalankan pod sebagai user 1000
+    runAsNonRoot: true  # Memastikan tidak berjalan sebagai root
+  containers:
+  - name: curl
+    image: curlimages/curl
+    command: ["sleep", "3600"]
+    securityContext:
+      allowPrivilegeEscalation: false  # Mencegah eskalasi privilege
+      runAsUser: 1000  # Menjalankan container sebagai user 1000
